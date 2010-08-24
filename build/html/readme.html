@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Readme &mdash; Flot v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flot v1.0 documentation" href="index.html" />
+    <link rel="prev" title="API" href="api.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="readme">
+<h1>Readme<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>Flot is a Javascript plotting library for jQuery. Read more at the
+website:</p>
+<blockquote>
+<a class="reference external" href="http://code.google.com/p/flot/">http://code.google.com/p/flot/</a></blockquote>
+<p>Take a look at the examples linked from above, they should give a good
+impression of what Flot can do and the source code of the examples is
+probably the fastest way to learn how to use Flot.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Just include the Javascript file after you&#8217;ve included jQuery.</p>
+<p>Note that you need to get a version of Excanvas (e.g. the one bundled
+with Flot) which is canvas emulation on Internet Explorer. You can
+include the excanvas script like this:</p>
+<blockquote>
+&lt;!&#8211;[if IE]&gt;&lt;script language=&#8221;javascript&#8221; type=&#8221;text/javascript&#8221; src=&#8221;excanvas.pack.js&#8221;&gt;&lt;/script&gt;&lt;![endif]&#8211;&gt;</blockquote>
+<p>If it&#8217;s not working on your development IE 6.0, check that it has
+support for VML which excanvas is relying on. It appears that some
+stripped down versions used for test environments on virtual machines
+lack the VML support.</p>
+<p>Also note that you need at least jQuery 1.2.6 (but at least jQuery
+1.3.2 is recommended for interactive charts because of performance
+improvements in event handling).</p>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>Create a placeholder div to put the graph in:</p>
+<blockquote>
+&lt;div id=&#8221;placeholder&#8221;&gt;&lt;/div&gt;</blockquote>
+<p>You need to set the width and height of this div, otherwise the plot
+library doesn&#8217;t know how to scale the graph. You can do it inline like
+this:</p>
+<blockquote>
+&lt;div id=&#8221;placeholder&#8221; style=&#8221;width:600px;height:300px&#8221;&gt;&lt;/div&gt;</blockquote>
+<p>You can also do it with an external stylesheet. Make sure that the
+placeholder isn&#8217;t within something with a display:none CSS property -
+in that case, Flot has trouble measuring label dimensions which
+results in garbled looks and might have trouble measuring the
+placeholder dimensions which is fatal (it&#8217;ll throw an exception).</p>
+<p>Then when the div is ready in the DOM, which is usually on document
+ready, run the plot function:</p>
+<blockquote>
+$.plot($(&#8220;#placeholder&#8221;), data, options);</blockquote>
+<p>Here, data is an array of data series and options is an object with
+settings if you want to customize the plot. Take a look at the
+examples for some ideas of what to put in or look at the reference
+in the file &#8220;API.txt&#8221;. Here&#8217;s a quick example that&#8217;ll draw a line from
+(0, 0) to (1, 1):</p>
+<blockquote>
+$.plot($(&#8220;#placeholder&#8221;), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });</blockquote>
+<p>The plot function immediately draws the chart and then returns a plot
+object with a couple of methods.</p>
+</div>
+<div class="section" id="what-s-with-the-name">
+<h2>What&#8217;s with the name?<a class="headerlink" href="#what-s-with-the-name" title="Permalink to this headline">¶</a></h2>
+<p>First: it&#8217;s pronounced with a short o, like &#8220;plot&#8221;. Not like &#8220;flawed&#8221;.</p>
+<p>So &#8220;Flot&#8221; rhymes with &#8220;plot&#8221;.</p>
+<p>And if you look up &#8220;flot&#8221; in a Danish-to-English dictionary, some up
+the words that come up are &#8220;good-looking&#8221;, &#8220;attractive&#8221;, &#8220;stylish&#8221;,
+&#8220;smart&#8221;, &#8220;impressive&#8221;, &#8220;extravagant&#8221;. One of the main goals with Flot
+is pretty looks.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Readme</a><ul>
+<li><a class="reference external" href="#about">About</a></li>
+<li><a class="reference external" href="#installation">Installation</a></li>
+<li><a class="reference external" href="#basic-usage">Basic usage</a></li>
+<li><a class="reference external" href="#what-s-with-the-name">What&#8217;s with the name?</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="api.html"
+                                  title="previous chapter">API</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/readme.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             >previous</a> |</li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Andriy Drozdyuk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

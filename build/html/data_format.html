@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Format &mdash; Flot v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flot v1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-format">
+<h1>Data Format<a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h1>
+<p>The data is an array of data series:</p>
+<blockquote>
+[ series1, series2, ... ]</blockquote>
+<p>A series can either be raw data or an object with properties. The raw
+data format is an array of points:</p>
+<blockquote>
+[ [x1, y1], [x2, y2], ... ]</blockquote>
+<p>E.g.</p>
+<blockquote>
+[ [1, 3], [2, 14.01], [3.5, 3.14] ]</blockquote>
+<p>Note that to simplify the internal logic in Flot both the x and y
+values must be numbers (even if specifying time series, see below for
+how to do this). This is a common problem because you might retrieve
+data from the database and serialize them directly to JSON without
+noticing the wrong type. If you&#8217;re getting mysterious errors, double
+check that you&#8217;re inputting numbers and not strings.</p>
+<p>If a null is specified as a point or if one of the coordinates is null
+or couldn&#8217;t be converted to a number, the point is ignored when
+drawing. As a special case, a null value for lines is interpreted as a
+line segment end, i.e. the points before and after the null value are
+not connected.</p>
+<p>Lines and points take two coordinates. For filled lines and bars, you
+can specify a third coordinate which is the bottom of the filled
+area/bar (defaults to 0).</p>
+<p>The format of a single series object is as follows:</p>
+<blockquote>
+<dl class="docutils">
+<dt>{</dt>
+<dd>color: color or number
+data: rawdata
+label: string
+lines: specific lines options
+bars: specific bars options
+points: specific points options
+xaxis: number
+yaxis: number
+clickable: boolean
+hoverable: boolean
+shadowSize: number</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>You don&#8217;t have to specify any of them except the data, the rest are
+options that will get default values. Typically you&#8217;d only specify
+label and data, like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>{</dt>
+<dd>label: &#8220;y = 3&#8221;,
+data: [[0, 3], [10, 3]]</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The label is used for the legend, if you don&#8217;t specify one, the series
+will not show up in the legend.</p>
+<p>If you don&#8217;t specify color, the series will get a color from the
+auto-generated colors. The color is either a CSS color specification
+(like &#8220;rgb(255, 100, 123)&#8221;) or an integer that specifies which of
+auto-generated colors to select, e.g. 0 will get color no. 0, etc.</p>
+<p>The latter is mostly useful if you let the user add and remove series,
+in which case you can hard-code the color index to prevent the colors
+from jumping around between the series.</p>
+<p>The &#8220;xaxis&#8221; and &#8220;yaxis&#8221; options specify which axis to use. The axes
+are numbered from 1 (default), so { yaxis: 2} means that the series
+should be plotted against the second y axis.</p>
+<p>&#8220;clickable&#8221; and &#8220;hoverable&#8221; can be set to false to disable
+interactivity for specific series if interactivity is turned on in
+the plot, see below.</p>
+<p>The rest of the options are all documented below as they are the same
+as the default options passed in via the options parameter in the plot
+commmand. When you specify them for a specific data series, they will
+override the default options for the plot for that data series.</p>
+<p>Here&#8217;s a complete example of a simple data specification:</p>
+<blockquote>
+<dl class="docutils">
+<dt>[ { label: &#8220;Foo&#8221;, data: [ [10, 1], [17, -14], [30, 5] ] },</dt>
+<dd>{ label: &#8220;Bar&#8221;, data: [ [11, 13], [19, 11], [30, -7] ] } ]</dd>
+</dl>
+</blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/data_format.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Andriy Drozdyuk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

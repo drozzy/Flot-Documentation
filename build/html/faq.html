@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently asked questions &mdash; Flot v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flot v1.0 documentation" href="index.html" />
+    <link rel="prev" title="Readme" href="readme.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="readme.html" title="Readme"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="frequently-asked-questions">
+<h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<p>Q: How much data can Flot cope with?</p>
+<p>A: Flot will happily draw everything you send to it so the answer
+depends on the browser. The excanvas emulation used for IE (built with
+VML) makes IE by far the slowest browser so be sure to test with that
+if IE users are in your target group.</p>
+<p>1000 points is not a problem, but as soon as you start having more
+points than the pixel width, you should probably start thinking about
+downsampling/aggregation as this is near the resolution limit of the
+chart anyway. If you downsample server-side, you also save bandwidth.</p>
+<p>Q: Flot isn&#8217;t working when I&#8217;m using JSON data as source!</p>
+<p>A: Actually, Flot loves JSON data, you just got the format wrong.
+Double check that you&#8217;re not inputting strings instead of numbers,
+like [[&#8220;0&#8221;, &#8220;-2.13&#8221;], [&#8220;5&#8221;, &#8220;4.3&#8221;]]. This is most common mistake, and
+the error might not show up immediately because Javascript can do some
+conversion automatically.</p>
+<p>Q: Can I export the graph?</p>
+<p>A: This is a limitation of the canvas technology. There&#8217;s a hook in
+the canvas object for getting an image out, but you won&#8217;t get the tick
+labels. And it&#8217;s not likely to be supported by IE. At this point, your
+best bet is probably taking a screenshot, e.g. with PrtScn.</p>
+<p>Q: The bars are all tiny in time mode?</p>
+<p>A: It&#8217;s not really possible to determine the bar width automatically.
+So you have to set the width with the barWidth option which is NOT in
+pixels, but in the units of the x axis (or the y axis for horizontal
+bars). For time mode that&#8217;s milliseconds so the default value of 1
+makes the bars 1 millisecond wide.</p>
+<p>Q: Can I use Flot with libraries like Mootools or Prototype?</p>
+<p>A: Yes, Flot supports it out of the box and it&#8217;s easy! Just use jQuery
+instead of $, e.g. call jQuery.plot instead of $.plot and use
+jQuery(something) instead of $(something). As a convenience, you can
+put in a DOM element for the graph placeholder where the examples and
+the API documentation are using jQuery objects.</p>
+<p>Depending on how you include jQuery, you may have to add one line of
+code to prevent jQuery from overwriting functions from the other
+libraries, see the documentation in jQuery (&#8220;Using jQuery with other
+libraries&#8221;) for details.</p>
+<p>Q: Flot doesn&#8217;t work with [insert name of Javascript UI framework]!</p>
+<p>A: The only non-standard thing used by Flot is the canvas tag;
+otherwise it is simply a series of absolute positioned divs within the
+placeholder tag you put in. If this is not working, it&#8217;s probably
+because the framework you&#8217;re using is doing something weird with the
+DOM, or you&#8217;re using it the wrong way.</p>
+<p>A common problem is that there&#8217;s display:none on a container until the
+user does something. Many tab widgets work this way, and there&#8217;s
+nothing wrong with it - you just can&#8217;t call Flot inside a display:none
+container as explained in the README so you need to hold off the Flot
+call until the container is actually displayed (or use
+visibility:hidden instead of display:none or move the container
+off-screen).</p>
+<p>If you find there&#8217;s a specific thing we can do to Flot to help, feel
+free to submit a bug report. Otherwise, you&#8217;re welcome to ask for help
+on the forum/mailing list, but please don&#8217;t submit a bug report to
+Flot.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="readme.html"
+                                  title="previous chapter">Readme</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/faq.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="readme.html" title="Readme"
+             >previous</a> |</li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Andriy Drozdyuk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plot Options &mdash; Flot v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Flot v1.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plot-options">
+<h1>Plot Options<a class="headerlink" href="#plot-options" title="Permalink to this headline">¶</a></h1>
+<p>All options are completely optional. They are documented individually
+below, to change them you just specify them in an object, e.g.</p>
+<blockquote>
+<dl class="docutils">
+<dt>var options = {</dt>
+<dd><dl class="first docutils">
+<dt>series: {</dt>
+<dd>lines: { show: true },
+points: { show: true }</dd>
+</dl>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>};</p>
+<p>$.plot(placeholder, data, options);</p>
+</blockquote>
+<div class="section" id="customizing-the-legend">
+<h2>Customizing the legend<a class="headerlink" href="#customizing-the-legend" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<dl class="docutils">
+<dt>legend: {</dt>
+<dd>show: boolean
+labelFormatter: null or (fn: string, series object -&gt; string)
+labelBoxBorderColor: color
+noColumns: number
+position: &#8220;ne&#8221; or &#8220;nw&#8221; or &#8220;se&#8221; or &#8220;sw&#8221;
+margin: number of pixels or [x margin, y margin]
+backgroundColor: null or color
+backgroundOpacity: number between 0 and 1
+container: null or jQuery object/DOM element/jQuery expression</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The legend is generated as a table with the data series labels and
+small label boxes with the color of the series. If you want to format
+the labels in some way, e.g. make them to links, you can pass in a
+function for &#8220;labelFormatter&#8221;. Here&#8217;s an example that makes them
+clickable:</p>
+<blockquote>
+<dl class="docutils">
+<dt>labelFormatter: function(label, series) {</dt>
+<dd>// series is the series object for the label
+return &#8216;&lt;a href=&#8221;#&#8217; + label + &#8216;&#8221;&gt;&#8217; + label + &#8216;&lt;/a&gt;&#8217;;</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>&#8220;noColumns&#8221; is the number of columns to divide the legend table into.
+&#8220;position&#8221; specifies the overall placement of the legend within the
+plot (top-right, top-left, etc.) and margin the distance to the plot
+edge (this can be either a number or an array of two numbers like [x,
+y]). &#8220;backgroundColor&#8221; and &#8220;backgroundOpacity&#8221; specifies the
+background. The default is a partly transparent auto-detected
+background.</p>
+<p>If you want the legend to appear somewhere else in the DOM, you can
+specify &#8220;container&#8221; as a jQuery object/expression to put the legend
+table into. The &#8220;position&#8221; and &#8220;margin&#8221; etc. options will then be
+ignored. Note that Flot will overwrite the contents of the container.</p>
+</div>
+<div class="section" id="customizing-the-axes">
+<h2>Customizing the axes<a class="headerlink" href="#customizing-the-axes" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<dl class="docutils">
+<dt>xaxis, yaxis: {</dt>
+<dd><p class="first">position: &#8220;bottom&#8221; or &#8220;top&#8221; or &#8220;left&#8221; or &#8220;right&#8221;
+mode: null or &#8220;time&#8221;</p>
+<p>color: null or color spec
+tickColor: null or color spec</p>
+<p>min: null or number
+max: null or number
+autoscaleMargin: null or number</p>
+<p>transform: null or fn: number -&gt; number
+inverseTransform: null or fn: number -&gt; number</p>
+<p>ticks: null or number or ticks array or (fn: range -&gt; ticks array)
+tickSize: number or array
+minTickSize: number or array
+tickFormatter: (fn: number, object -&gt; string) or string
+tickDecimals: null or number</p>
+<p>labelWidth: null or number
+labelHeight: null or number</p>
+<p>tickLength: null or number</p>
+<p class="last">alignTicksWithAxis: null or number</p>
+</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>All axes have the same kind of options. The following describes how to
+configure one axis, see below for what to do if you&#8217;ve got more than
+one x axis or y axis.</p>
+<p>The &#8220;position&#8221; option specifies where the axis is placed, bottom or
+top for x axes, left or right for y axes. The &#8220;mode&#8221; option determines
+how the data is interpreted, the default of null means as decimal
+numbers. Use &#8220;time&#8221; for time series data, see the time series data
+section.</p>
+<p>The &#8220;color&#8221; option determines the color of the labels and ticks for
+the axis (default is the grid color). For more fine-grained control
+you can also set the color of the ticks separately with &#8220;tickColor&#8221;
+(otherwise it&#8217;s autogenerated as the base color with some
+transparency).</p>
+<p>The options &#8220;min&#8221;/&#8221;max&#8221; are the precise minimum/maximum value on the
+scale. If you don&#8217;t specify either of them, a value will automatically
+be chosen based on the minimum/maximum data values.</p>
+<p>The &#8220;autoscaleMargin&#8221; is a bit esoteric: it&#8217;s the fraction of margin
+that the scaling algorithm will add to avoid that the outermost points
+ends up on the grid border. Note that this margin is only applied when
+a min or max value is not explicitly set. If a margin is specified,
+the plot will furthermore extend the axis end-point to the nearest
+whole tick. The default value is &#8220;null&#8221; for the x axes and 0.02 for y
+axes which seems appropriate for most cases.</p>
+<p>&#8220;transform&#8221; and &#8220;inverseTransform&#8221; are callbacks you can put in to
+change the way the data is drawn. You can design a function to
+compress or expand certain parts of the axis non-linearly, e.g.
+suppress weekends or compress far away points with a logarithm or some
+other means. When Flot draws the plot, each value is first put through
+the transform function. Here&#8217;s an example, the x axis can be turned
+into a natural logarithm axis with the following code:</p>
+<blockquote>
+<dl class="docutils">
+<dt>xaxis: {</dt>
+<dd>transform: function (v) { return Math.log(v); },
+inverseTransform: function (v) { return Math.exp(v); }</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>Note that for finding extrema, Flot assumes that the transform
+function does not reorder values (it should be monotone).</p>
+<p>The inverseTransform is simply the inverse of the transform function
+(so v == inverseTransform(transform(v)) for all relevant v). It is
+required for converting from canvas coordinates to data coordinates,
+e.g. for a mouse interaction where a certain pixel is clicked. If you
+don&#8217;t use any interactive features of Flot, you may not need it.</p>
+<p>The rest of the options deal with the ticks.</p>
+<p>If you don&#8217;t specify any ticks, a tick generator algorithm will make
+some for you. The algorithm has two passes. It first estimates how
+many ticks would be reasonable and uses this number to compute a nice
+round tick interval size. Then it generates the ticks.</p>
+<p>You can specify how many ticks the algorithm aims for by setting
+&#8220;ticks&#8221; to a number. The algorithm always tries to generate reasonably
+round tick values so even if you ask for three ticks, you might get
+five if that fits better with the rounding. If you don&#8217;t want any
+ticks at all, set &#8220;ticks&#8221; to 0 or an empty array.</p>
+<p>Another option is to skip the rounding part and directly set the tick
+interval size with &#8220;tickSize&#8221;. If you set it to 2, you&#8217;ll get ticks at
+2, 4, 6, etc. Alternatively, you can specify that you just don&#8217;t want
+ticks at a size less than a specific tick size with &#8220;minTickSize&#8221;.
+Note that for time series, the format is an array like [2, &#8220;month&#8221;],
+see the next section.</p>
+<p>If you want to completely override the tick algorithm, you can specify
+an array for &#8220;ticks&#8221;, either like this:</p>
+<blockquote>
+ticks: [0, 1.2, 2.4]</blockquote>
+<p>Or like this where the labels are also customized:</p>
+<blockquote>
+ticks: [[0, &#8220;zero&#8221;], [1.2, &#8220;one mark&#8221;], [2.4, &#8220;two marks&#8221;]]</blockquote>
+<p>You can mix the two if you like.</p>
+<p>For extra flexibility you can specify a function as the &#8220;ticks&#8221;
+parameter. The function will be called with an object with the axis
+min and max and should return a ticks array. Here&#8217;s a simplistic tick
+generator that spits out intervals of pi, suitable for use on the x
+axis for trigonometric functions:</p>
+<blockquote>
+<dl class="docutils">
+<dt>function piTickGenerator(axis) {</dt>
+<dd><p class="first">var res = [], i = Math.floor(axis.min / Math.PI);
+do {</p>
+<blockquote>
+var v = i * Math.PI;
+res.push([v, i + &#8220;u03c0&#8221;]);
+++i;</blockquote>
+<p>} while (v &lt; axis.max);</p>
+<p class="last">return res;</p>
+</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>You can control how the ticks look like with &#8220;tickDecimals&#8221;, the
+number of decimals to display (default is auto-detected).</p>
+<p>Alternatively, for ultimate control over how ticks are formatted you can
+provide a function to &#8220;tickFormatter&#8221;. The function is passed two
+parameters, the tick value and an &#8220;axis&#8221; object with information, and
+should return a string. The default formatter looks like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>function formatter(val, axis) {</dt>
+<dd>return val.toFixed(axis.tickDecimals);</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The axis object has &#8220;min&#8221; and &#8220;max&#8221; with the range of the axis,
+&#8220;tickDecimals&#8221; with the number of decimals to round the value to and
+&#8220;tickSize&#8221; with the size of the interval between ticks as calculated
+by the automatic axis scaling algorithm (or specified by you). Here&#8217;s
+an example of a custom formatter:</p>
+<blockquote>
+<dl class="docutils">
+<dt>function suffixFormatter(val, axis) {</dt>
+<dd><dl class="first last docutils">
+<dt>if (val &gt; 1000000)</dt>
+<dd>return (val / 1000000).toFixed(axis.tickDecimals) + &#8221; MB&#8221;;</dd>
+<dt>else if (val &gt; 1000)</dt>
+<dd>return (val / 1000).toFixed(axis.tickDecimals) + &#8221; kB&#8221;;</dd>
+<dt>else</dt>
+<dd>return val.toFixed(axis.tickDecimals) + &#8221; B&#8221;;</dd>
+</dl>
+</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>&#8220;labelWidth&#8221; and &#8220;labelHeight&#8221; specifies a fixed size of the tick
+labels in pixels. They&#8217;re useful in case you need to align several
+plots.</p>
+<p>&#8220;tickLength&#8221; is the length of the tick lines in pixels. By default, the
+innermost axes will have ticks that extend all across the plot, while
+any extra axes use small ticks. A value of null means use the default,
+while a number means small ticks of that length - set it to 0 to hide
+the lines completely.</p>
+<p>If you set &#8220;alignTicksWithAxis&#8221; to the number of another axis, e.g.
+alignTicksWithAxis: 1, Flot will ensure that the autogenerated ticks
+of this axis are aligned with the ticks of the other axis. This may
+improve the looks, e.g. if you have one y axis to the left and one to
+the right, because the grid lines will then match the ticks in both
+ends. The trade-off is that the forced ticks won&#8217;t necessarily be at
+natural places.</p>
+</div>
+<div class="section" id="multiple-axes">
+<h2>Multiple axes<a class="headerlink" href="#multiple-axes" title="Permalink to this headline">¶</a></h2>
+<p>If you need more than one x axis or y axis, you need to specify for
+each data series which axis they are to use, as described under the
+format of the data series, e.g. { data: [...], yaxis: 2 } specifies
+that a series should be plotted against the second y axis.</p>
+<p>To actually configure that axis, you can&#8217;t use the xaxis/yaxis options
+directly - instead there are two arrays in the options:</p>
+<blockquote>
+xaxes: []
+yaxes: []</blockquote>
+<p>Here&#8217;s an example of configuring a single x axis and two y axes (we
+can leave options of the first y axis empty as the defaults are fine):</p>
+<blockquote>
+<dl class="docutils">
+<dt>{</dt>
+<dd>xaxes: [ { position: &#8220;top&#8221; } ],
+yaxes: [ { }, { position: &#8220;right&#8221;, min: 20 } ]</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The arrays get their default values from the xaxis/yaxis settings, so
+say you want to have all y axes start at zero, you can simply specify
+yaxis: { min: 0 } instead of adding a min parameter to all the axes.</p>
+<p>Generally, the various interfaces in Flot dealing with data points
+either accept an xaxis/yaxis parameter to specify which axis number to
+use (starting from 1), or lets you specify the coordinate directly as
+x2/x3/... or x2axis/x3axis/... instead of &#8220;x&#8221; or &#8220;xaxis&#8221;.</p>
+</div>
+<div class="section" id="time-series-data">
+<h2>Time series data<a class="headerlink" href="#time-series-data" title="Permalink to this headline">¶</a></h2>
+<p>Time series are a bit more difficult than scalar data because
+calendars don&#8217;t follow a simple base 10 system. For many cases, Flot
+abstracts most of this away, but it can still be a bit difficult to
+get the data into Flot. So we&#8217;ll first discuss the data format.</p>
+<p>The time series support in Flot is based on Javascript timestamps,
+i.e. everywhere a time value is expected or handed over, a Javascript
+timestamp number is used. This is a number, not a Date object. A
+Javascript timestamp is the number of milliseconds since January 1,
+1970 00:00:00 UTC. This is almost the same as Unix timestamps, except it&#8217;s
+in milliseconds, so remember to multiply by 1000!</p>
+<p>You can see a timestamp like this</p>
+<blockquote>
+alert((new Date()).getTime())</blockquote>
+<p>Normally you want the timestamps to be displayed according to a
+certain time zone, usually the time zone in which the data has been
+produced. However, Flot always displays timestamps according to UTC.
+It has to as the only alternative with core Javascript is to interpret
+the timestamps according to the time zone that the visitor is in,
+which means that the ticks will shift unpredictably with the time zone
+and daylight savings of each visitor.</p>
+<p>So given that there&#8217;s no good support for custom time zones in
+Javascript, you&#8217;ll have to take care of this server-side.</p>
+<p>The easiest way to think about it is to pretend that the data
+production time zone is UTC, even if it isn&#8217;t. So if you have a
+datapoint at 2002-02-20 08:00, you can generate a timestamp for eight
+o&#8217;clock UTC even if it really happened eight o&#8217;clock UTC+0200.</p>
+<p>In PHP you can get an appropriate timestamp with
+&#8216;strtotime(&#8220;2002-02-20 UTC&#8221;) * 1000&#8217;, in Python with
+&#8216;calendar.timegm(datetime_object.timetuple()) * 1000&#8217;, in .NET with
+something like:</p>
+<blockquote>
+<p>public static int GetJavascriptTimestamp(System.DateTime input)
+{</p>
+<blockquote>
+System.TimeSpan span = new System.TimeSpan(System.DateTime.Parse(&#8220;1/1/1970&#8221;).Ticks);
+System.DateTime time = input.Subtract(span);
+return (long)(time.Ticks / 10000);</blockquote>
+<p>}</p>
+</blockquote>
+<p>Javascript also has some support for parsing date strings, so it is
+possible to generate the timestamps manually client-side.</p>
+<p>If you&#8217;ve already got the real UTC timestamp, it&#8217;s too late to use the
+pretend trick described above. But you can fix up the timestamps by
+adding the time zone offset, e.g. for UTC+0200 you would add 2 hours
+to the UTC timestamp you got. Then it&#8217;ll look right on the plot. Most
+programming environments have some means of getting the timezone
+offset for a specific date (note that you need to get the offset for
+each individual timestamp to account for daylight savings).</p>
+<p>Once you&#8217;ve gotten the timestamps into the data and specified &#8220;time&#8221;
+as the axis mode, Flot will automatically generate relevant ticks and
+format them. As always, you can tweak the ticks via the &#8220;ticks&#8221; option
+- just remember that the values should be timestamps (numbers), not
+Date objects.</p>
+<p>Tick generation and formatting can also be controlled separately
+through the following axis options:</p>
+<blockquote>
+minTickSize: array
+timeformat: null or format string
+monthNames: null or array of size 12 of strings
+twelveHourClock: boolean</blockquote>
+<p>Here &#8220;timeformat&#8221; is a format string to use. You might use it like
+this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>xaxis: {</dt>
+<dd>mode: &#8220;time&#8221;
+timeformat: &#8220;%y/%m/%d&#8221;</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>This will result in tick labels like &#8220;2000/12/24&#8221;. The following
+specifiers are supported</p>
+<blockquote>
+%h: hours
+%H: hours (left-padded with a zero)
+%M: minutes (left-padded with a zero)
+%S: seconds (left-padded with a zero)
+%d: day of month (1-31), use %0d for zero-padding
+%m: month (1-12), use %0m for zero-padding
+%y: year (four digits)
+%b: month name (customizable)
+%p: am/pm, additionally switches %h/%H to 12 hour instead of 24
+%P: AM/PM (uppercase version of %p)</blockquote>
+<p>Inserting a zero like %0m or %0d means that the specifier will be
+left-padded with a zero if it&#8217;s only single-digit. So %y-%0m-%0d
+results in unambigious ISO timestamps like 2007-05-10 (for May 10th).</p>
+<p>You can customize the month names with the &#8220;monthNames&#8221; option. For
+instance, for Danish you might specify:</p>
+<blockquote>
+monthNames: [&#8220;jan&#8221;, &#8220;feb&#8221;, &#8220;mar&#8221;, &#8220;apr&#8221;, &#8220;maj&#8221;, &#8220;jun&#8221;, &#8220;jul&#8221;, &#8220;aug&#8221;, &#8220;sep&#8221;, &#8220;okt&#8221;, &#8220;nov&#8221;, &#8220;dec&#8221;]</blockquote>
+<p>If you set &#8220;twelveHourClock&#8221; to true, the autogenerated timestamps
+will use 12 hour AM/PM timestamps instead of 24 hour.</p>
+<p>The format string and month names are used by a very simple built-in
+format function that takes a date object, a format string (and
+optionally an array of month names) and returns the formatted string.
+If needed, you can access it as $.plot.formatDate(date, formatstring,
+monthNames) or even replace it with another more advanced function
+from a date library if you&#8217;re feeling adventurous.</p>
+<p>If everything else fails, you can control the formatting by specifying
+a custom tick formatter function as usual. Here&#8217;s a simple example
+which will format December 24 as 24/12:</p>
+<blockquote>
+<dl class="docutils">
+<dt>tickFormatter: function (val, axis) {</dt>
+<dd>var d = new Date(val);
+return d.getUTCDate() + &#8220;/&#8221; + (d.getUTCMonth() + 1);</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>Note that for the time mode &#8220;tickSize&#8221; and &#8220;minTickSize&#8221; are a bit
+special in that they are arrays on the form &#8220;[value, unit]&#8221; where unit
+is one of &#8220;second&#8221;, &#8220;minute&#8221;, &#8220;hour&#8221;, &#8220;day&#8221;, &#8220;month&#8221; and &#8220;year&#8221;. So
+you can specify</p>
+<blockquote>
+minTickSize: [1, &#8220;month&#8221;]</blockquote>
+<p>to get a tick interval size of at least 1 month and correspondingly,
+if axis.tickSize is [2, &#8220;day&#8221;] in the tick formatter, the ticks have
+been produced with two days in-between.</p>
+</div>
+<div class="section" id="customizing-the-data-series">
+<h2>Customizing the data series<a class="headerlink" href="#customizing-the-data-series" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<dl class="docutils">
+<dt>series: {</dt>
+<dd><dl class="first docutils">
+<dt>lines, points, bars: {</dt>
+<dd>show: boolean
+lineWidth: number
+fill: boolean or number
+fillColor: null or color/gradient</dd>
+</dl>
+<p>}</p>
+<dl class="docutils">
+<dt>points: {</dt>
+<dd>radius: number
+symbol: &#8220;circle&#8221; or function</dd>
+</dl>
+<p>}</p>
+<dl class="docutils">
+<dt>bars: {</dt>
+<dd>barWidth: number
+align: &#8220;left&#8221; or &#8220;center&#8221;
+horizontal: boolean</dd>
+</dl>
+<p>}</p>
+<dl class="docutils">
+<dt>lines: {</dt>
+<dd>steps: boolean</dd>
+</dl>
+<p>}</p>
+<p class="last">shadowSize: number</p>
+</dd>
+</dl>
+<p>}</p>
+<p>colors: [ color1, color2, ... ]</p>
+</blockquote>
+<p>The options inside &#8220;series: {}&#8221; are copied to each of the series. So
+you can specify that all series should have bars by putting it in the
+global options, or override it for individual series by specifying
+bars in a particular the series object in the array of data.</p>
+<p>The most important options are &#8220;lines&#8221;, &#8220;points&#8221; and &#8220;bars&#8221; that
+specify whether and how lines, points and bars should be shown for
+each data series. In case you don&#8217;t specify anything at all, Flot will
+default to showing lines (you can turn this off with
+lines: { show: false }). You can specify the various types
+independently of each other, and Flot will happily draw each of them
+in turn (this is probably only useful for lines and points), e.g.</p>
+<blockquote>
+<dl class="docutils">
+<dt>var options = {</dt>
+<dd><dl class="first docutils">
+<dt>series: {</dt>
+<dd>lines: { show: true, fill: true, fillColor: &#8220;rgba(255, 255, 255, 0.8)&#8221; },
+points: { show: true, fill: false }</dd>
+</dl>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>};</p>
+</blockquote>
+<p>&#8220;lineWidth&#8221; is the thickness of the line or outline in pixels. You can
+set it to 0 to prevent a line or outline from being drawn; this will
+also hide the shadow.</p>
+<p>&#8220;fill&#8221; is whether the shape should be filled. For lines, this produces
+area graphs. You can use &#8220;fillColor&#8221; to specify the color of the fill.
+If &#8220;fillColor&#8221; evaluates to false (default for everything except
+points which are filled with white), the fill color is auto-set to the
+color of the data series. You can adjust the opacity of the fill by
+setting fill to a number between 0 (fully transparent) and 1 (fully
+opaque).</p>
+<p>For bars, fillColor can be a gradient, see the gradient documentation
+below. &#8220;barWidth&#8221; is the width of the bars in units of the x axis (or
+the y axis if &#8220;horizontal&#8221; is true), contrary to most other measures
+that are specified in pixels. For instance, for time series the unit
+is milliseconds so 24 * 60 * 60 * 1000 produces bars with the width of
+a day. &#8220;align&#8221; specifies whether a bar should be left-aligned
+(default) or centered on top of the value it represents. When
+&#8220;horizontal&#8221; is on, the bars are drawn horizontally, i.e. from the y
+axis instead of the x axis; note that the bar end points are still
+defined in the same way so you&#8217;ll probably want to swap the
+coordinates if you&#8217;ve been plotting vertical bars first.</p>
+<p>For lines, &#8220;steps&#8221; specifies whether two adjacent data points are
+connected with a straight (possibly diagonal) line or with first a
+horizontal and then a vertical line. Note that this transforms the
+data by adding extra points.</p>
+<p>For points, you can specify the radius and the symbol. The only
+built-in symbol type is circles, for other types you can use a plugin
+or define them yourself by specifying a callback:</p>
+<blockquote>
+<dl class="docutils">
+<dt>function cross(ctx, x, y, radius, shadow) {</dt>
+<dd>var size = radius * Math.sqrt(Math.PI) / 2;
+ctx.moveTo(x - size, y - size);
+ctx.lineTo(x + size, y + size);
+ctx.moveTo(x - size, y + size);
+ctx.lineTo(x + size, y - size);</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The parameters are the drawing context, x and y coordinates of the
+center of the point, a radius which corresponds to what the circle
+would have used and whether the call is to draw a shadow (due to
+limited canvas support, shadows are currently faked through extra
+draws). It&#8217;s good practice to ensure that the area covered by the
+symbol is the same as for the circle with the given radius, this
+ensures that all symbols have approximately the same visual weight.</p>
+<p>&#8220;shadowSize&#8221; is the default size of shadows in pixels. Set it to 0 to
+remove shadows.</p>
+<p>The &#8220;colors&#8221; array specifies a default color theme to get colors for
+the data series from. You can specify as many colors as you like, like
+this:</p>
+<blockquote>
+colors: [&#8220;#d18b2c&#8221;, &#8220;#dba255&#8221;, &#8220;#919733&#8221;]</blockquote>
+<p>If there are more data series than colors, Flot will try to generate
+extra colors by lightening and darkening colors in the theme.</p>
+</div>
+<div class="section" id="customizing-the-grid">
+<h2>Customizing the grid<a class="headerlink" href="#customizing-the-grid" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<dl class="docutils">
+<dt>grid: {</dt>
+<dd>show: boolean
+aboveData: boolean
+color: color
+backgroundColor: color/gradient or null
+labelMargin: number
+axisMargin: number
+markings: array of markings or (fn: axes -&gt; array of markings)
+borderWidth: number
+borderColor: color or null
+clickable: boolean
+hoverable: boolean
+autoHighlight: boolean
+mouseActiveRadius: number</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>The grid is the thing with the axes and a number of ticks. Many of the
+things in the grid are configured under the individual axes, but not
+all. &#8220;color&#8221; is the color of the grid itself whereas &#8220;backgroundColor&#8221;
+specifies the background color inside the grid area, here null means
+that the background is transparent. You can also set a gradient, see
+the gradient documentation below.</p>
+<p>You can turn off the whole grid including tick labels by setting
+&#8220;show&#8221; to false. &#8220;aboveData&#8221; determines whether the grid is drawn
+above the data or below (below is default).</p>
+<p>&#8220;labelMargin&#8221; is the space in pixels between tick labels and axis
+line, and &#8220;axisMargin&#8221; is the space in pixels between axes when there
+are two next to each other. Note that you can style the tick labels
+with CSS, e.g. to change the color. They have class &#8220;tickLabel&#8221;.
+&#8220;borderWidth&#8221; is the width of the border around the plot. Set it to 0
+to disable the border. You can also set &#8220;borderColor&#8221; if you want the
+border to have a different color than the grid lines.</p>
+<p>&#8220;markings&#8221; is used to draw simple lines and rectangular areas in the
+background of the plot. You can either specify an array of ranges on
+the form { xaxis: { from, to }, yaxis: { from, to } } (with multiple
+axes, you can specify coordinates for other axes instead, e.g. as
+x2axis/x3axis/...) or with a function that returns such an array given
+the axes for the plot in an object as the first parameter.</p>
+<p>You can set the color of markings by specifying &#8220;color&#8221; in the ranges
+object. Here&#8217;s an example array:</p>
+<blockquote>
+markings: [ { xaxis: { from: 0, to: 2 }, yaxis: { from: 10, to: 10 }, color: &#8220;#bb0000&#8221; }, ... ]</blockquote>
+<p>If you leave out one of the values, that value is assumed to go to the
+border of the plot. So for example if you only specify { xaxis: {
+from: 0, to: 2 } } it means an area that extends from the top to the
+bottom of the plot in the x range 0-2.</p>
+<p>A line is drawn if from and to are the same, e.g.</p>
+<blockquote>
+markings: [ { yaxis: { from: 1, to: 1 } }, ... ]</blockquote>
+<p>would draw a line parallel to the x axis at y = 1. You can control the
+line width with &#8220;lineWidth&#8221; in the range object.</p>
+<p>An example function that makes vertical stripes might look like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>markings: function (axes) {</dt>
+<dd><p class="first">var markings = [];
+for (var x = Math.floor(axes.xaxis.min); x &lt; axes.xaxis.max; x += 2)</p>
+<blockquote>
+markings.push({ xaxis: { from: x, to: x + 1 } });</blockquote>
+<p class="last">return markings;</p>
+</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>If you set &#8220;clickable&#8221; to true, the plot will listen for click events
+on the plot area and fire a &#8220;plotclick&#8221; event on the placeholder with
+a position and a nearby data item object as parameters. The coordinates
+are available both in the unit of the axes (not in pixels) and in
+global screen coordinates.</p>
+<p>Likewise, if you set &#8220;hoverable&#8221; to true, the plot will listen for
+mouse move events on the plot area and fire a &#8220;plothover&#8221; event with
+the same parameters as the &#8220;plotclick&#8221; event. If &#8220;autoHighlight&#8221; is
+true (the default), nearby data items are highlighted automatically.
+If needed, you can disable highlighting and control it yourself with
+the highlight/unhighlight plot methods described elsewhere.</p>
+<p>You can use &#8220;plotclick&#8221; and &#8220;plothover&#8221; events like this:</p>
+<blockquote>
+<p>$.plot($(&#8220;#placeholder&#8221;), [ d ], { grid: { clickable: true } });</p>
+<dl class="docutils">
+<dt>$(&#8220;#placeholder&#8221;).bind(&#8220;plotclick&#8221;, function (event, pos, item) {</dt>
+<dd><p class="first">alert(&#8220;You clicked at &#8221; + pos.x + &#8220;, &#8221; + pos.y);
+// axis coordinates for other axes, if present, are in pos.x2, pos.x3, ...
+// if you need global screen coordinates, they are pos.pageX, pos.pageY</p>
+<dl class="docutils">
+<dt>if (item) {</dt>
+<dd>highlight(item.series, item.datapoint);
+alert(&#8220;You clicked a point!&#8221;);</dd>
+</dl>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>});</p>
+</blockquote>
+<p>The item object in this example is either null or a nearby object on the form:</p>
+<blockquote>
+<dl class="docutils">
+<dt>item: {</dt>
+<dd>datapoint: the point, e.g. [0, 2]
+dataIndex: the index of the point in the data array
+series: the series object
+seriesIndex: the index of the series
+pageX, pageY: the global screen coordinates of the point</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>For instance, if you have specified the data like this</p>
+<blockquote>
+$.plot($(&#8220;#placeholder&#8221;), [ { label: &#8220;Foo&#8221;, data: [[0, 10], [7, 3]] } ], ...);</blockquote>
+<p>and the mouse is near the point (7, 3), &#8220;datapoint&#8221; is [7, 3],
+&#8220;dataIndex&#8221; will be 1, &#8220;series&#8221; is a normalized series object with
+among other things the &#8220;Foo&#8221; label in series.label and the color in
+series.color, and &#8220;seriesIndex&#8221; is 0. Note that plugins and options
+that transform the data can shift the indexes from what you specified
+in the original data array.</p>
+<p>If you use the above events to update some other information and want
+to clear out that info in case the mouse goes away, you&#8217;ll probably
+also need to listen to &#8220;mouseout&#8221; events on the placeholder div.</p>
+<p>&#8220;mouseActiveRadius&#8221; specifies how far the mouse can be from an item
+and still activate it. If there are two or more points within this
+radius, Flot chooses the closest item. For bars, the top-most bar
+(from the latest specified data series) is chosen.</p>
+<p>If you want to disable interactivity for a specific data series, you
+can set &#8220;hoverable&#8221; and &#8220;clickable&#8221; to false in the options for that
+series, like this { data: [...], label: &#8220;Foo&#8221;, clickable: false }.</p>
+</div>
+<div class="section" id="specifying-gradients">
+<h2>Specifying gradients<a class="headerlink" href="#specifying-gradients" title="Permalink to this headline">¶</a></h2>
+<p>A gradient is specified like this:</p>
+<blockquote>
+{ colors: [ color1, color2, ... ] }</blockquote>
+<p>For instance, you might specify a background on the grid going from
+black to gray like this:</p>
+<blockquote>
+<dl class="docutils">
+<dt>grid: {</dt>
+<dd>backgroundColor: { colors: [&#8220;#000&#8221;, &#8220;#999&#8221;] }</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>For the series you can specify the gradient as an object that
+specifies the scaling of the brightness and the opacity of the series
+color, e.g.</p>
+<blockquote>
+{ colors: [{ opacity: 0.8 }, { brightness: 0.6, opacity: 0.8 } ] }</blockquote>
+<p>where the first color simply has its alpha scaled, whereas the second
+is also darkened. For instance, for bars the following makes the bars
+gradually disappear, without outline:</p>
+<blockquote>
+<dl class="docutils">
+<dt>bars: {</dt>
+<dd>show: true,
+lineWidth: 0,
+fill: true,
+fillColor: { colors: [ { opacity: 0.8 }, { opacity: 0.1 } ] }</dd>
+</dl>
+<p>}</p>
+</blockquote>
+<p>Flot currently only supports vertical gradients drawn from top to
+bottom because that&#8217;s what works with IE.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Plot Options</a><ul>
+<li><a class="reference external" href="#customizing-the-legend">Customizing the legend</a></li>
+<li><a class="reference external" href="#customizing-the-axes">Customizing the axes</a></li>
+<li><a class="reference external" href="#multiple-axes">Multiple axes</a></li>
+<li><a class="reference external" href="#time-series-data">Time series data</a></li>
+<li><a class="reference external" href="#customizing-the-data-series">Customizing the data series</a></li>
+<li><a class="reference external" href="#customizing-the-grid">Customizing the grid</a></li>
+<li><a class="reference external" href="#specifying-gradients">Specifying gradients</a></li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/plot_options.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">Flot v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Andriy Drozdyuk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+    </div>
+  </body>
+</html>
